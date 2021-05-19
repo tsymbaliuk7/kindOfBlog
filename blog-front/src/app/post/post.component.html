@@ -1,0 +1,38 @@
+<div class="for-post">
+    <div [hidden]="is_updating">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="likes-class">
+                <span style="cursor: pointer" [ngStyle]="{
+                color: post.is_disliked ? 'red': '#fffffa'
+                }" (click)="dislikeClicked()"> - </span>
+                <span [ngStyle]="{
+                color: getColor()
+                }" >{{post.balance}} </span>
+                <span style="cursor: pointer" (click)="likeClicked()" [ngStyle]="{
+                color: post.is_liked ? 'green': '#fffffa'
+                }" > + </span>
+            </p>
+            <a href="">by @tsymbaliuk </a>
+            <span>{{post.updated_at | date: 'short'}} </span>
+            <div class="d-flex">
+                <div (click)="changeToUpdating()"><img class="post-img"  src="assets/refresh.svg" alt="update"></div>
+                <div (click)="deleteConfirmation()"><img class="post-img"  src="assets/delete.svg" alt="delete"></div>
+            </div>
+        </div>
+        <div class="dark-line"></div>
+
+        <div class="post-main">
+            <h4 class="post-text" style="cursor: pointer">{{post.title}} </h4>
+             <div style="background-color: #fffffa !important; height: 1px" class="dark-line"></div>
+            <p class="post-text" style="white-space: pre">{{post.text}}</p>
+        </div>
+    </div>
+    <div [hidden]="!is_updating">
+            <input type="text" [(ngModel)]="post_updated.title">
+            <textarea type="text" [(ngModel)]="post_updated.text"></textarea>
+        <div class="d-flex">
+            <input class="btn btn-outline-primary" type="submit" (click)="updatePost()" value="Submit">
+            <input class="btn btn-outline-warning" type="submit" (click)="declineUpdating()" value="Decline">
+        </div>
+    </div>
+</div>

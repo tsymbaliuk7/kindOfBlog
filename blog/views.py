@@ -6,11 +6,11 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, ModelViewSet
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK, HTTP_201_CREATED, HTTP_301_MOVED_PERMANENTLY, HTTP_204_NO_CONTENT
 from .models import Post, Comment
-from .serializers import PostSerializer
+from .serializers import CommentsSerializer, PostSerializer
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.order_by('-created_at')
     serializer_class = PostSerializer
 
     # def list(self, request):
@@ -31,12 +31,12 @@ class PostViewSet(ModelViewSet):
     #         return Response(serializer.data)
     #     return Response(serializer.errors, status=HTTP_404_NOT_FOUND)
     #
-    # def create(self, request):
-    #     serializer = PostSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=HTTP_404_NOT_FOUND)
+    def create(self, request, **kwargs):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=HTTP_201_CREATED)
+        return Response(serializer.errors, status=HTTP_404_NOT_FOUND)
     #
     # def destroy(self, request, pk=None):
     #     post = get_object_or_404(Post, pk=pk)

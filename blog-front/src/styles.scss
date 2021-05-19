@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { min-height: 100vh; }
+body { margin: 0;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  color: #fffffa;
+  background-color: #0D1117;
+  a{
+    color: #fffffa;
+  }
+  li {
+    list-style-type: none;
+   }
+   ul {
+    margin-left: 0;
+    padding-left: 0;
+   }
+}
+textarea{
+  resize: none;
+}

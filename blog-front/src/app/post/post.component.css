@@ -1,0 +1,73 @@
+.for-post {
+  background-color: #343A40;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.likes-class {
+  font-weight: bolder;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.likes-class a {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.post-img {
+  height: 30px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+input[type=text], textarea {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  outline: none;
+  padding: 10px;
+  width: 90% !important;
+  background-color: #161B22;
+  border: none;
+  border-radius: 10px;
+  color: #fffffa;
+  margin-bottom: 10px;
+}
+input[type=text]:focus, input[type=text] textarea, textarea:focus, textarea textarea {
+  box-shadow: 0 0 5px #51cbee;
+  padding: 12px;
+  margin: 5px 1px 10px 0;
+  border: 1px solid #51cbee;
+}
+
+input {
+  display: block;
+}
+
+textarea {
+  min-height: 200px;
+}
+
+.post-text {
+  padding: 20px;
+}
+
+.dark-line {
+  background-color: #161B22;
+  height: 2px;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+h4 {
+  font-weight: bold;
+}
+
+.post-main {
+  background-color: #161B22;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/*# sourceMappingURL=post.component.css.map */
