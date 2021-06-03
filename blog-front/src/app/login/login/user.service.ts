@@ -27,7 +27,7 @@ export class UserService {
 
   // @ts-ignore
   registerUser(userData: any): Observable<any>{
-    return this.http.post('http://127.0.0.1:8000/users/', userData);
+    return this.http.post('http://127.0.0.1:8000/accounts/register', userData);
 
   }
 

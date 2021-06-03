@@ -6,13 +6,18 @@
     <span *ngFor="let error of userService.errors.username"><br />
     {{ error }}</span></div>
   <div class="col-sm-4">
+    <label>Email:</label><br />
+    <input type="email" name="login-email" [(ngModel)]="input.email">
+    <span *ngFor="let error of userService.errors.username"><br />
+    {{ error }}</span></div>
+  <div class="col-sm-4">
     <label>Password:</label><br />
     <input type="password" name="login-password" [(ngModel)]="input.password">
     <span *ngFor="let error of userService.errors.password"><br />
     {{ error }}</span>
   </div>
   <div class="col-sm-4">
-    <button (click)="toLogin()" class="btn btn-primary">Log In</button>
+    <button (click)="toRegister()" class="btn btn-primary">Log In</button>
   </div>
   <div class="col-sm-12">
     <span *ngFor="let error of userService.errors.non_field_errors">{{ error }}<br /></span>

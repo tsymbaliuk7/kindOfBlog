@@ -11,6 +11,7 @@ import { TippyModule } from '@ngneat/helipopper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { PostsComponent } from './posts/posts.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { FooterComponent } from './footer/footer.component';
     PostComponent,
     HeaderComponent,
     FooterComponent,
+    PostsComponent,
   ],
   imports: [
     BrowserModule,

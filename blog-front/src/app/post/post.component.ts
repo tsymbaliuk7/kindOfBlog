@@ -1,6 +1,7 @@
 import { Component, OnInit , Input} from '@angular/core';
 import {PostsService} from "../posts.service";
 import {AppComponent} from "../app.component";
+import {PostsComponent} from "../posts/posts.component";
 
 @Component({
   selector: 'app-post',
@@ -17,7 +18,7 @@ export class PostComponent implements OnInit {
   updating_errors: any;
   is_updating;
 
-  constructor(public postService: PostsService, public app: AppComponent) {
+  constructor(public postService: PostsService, public app: PostsComponent) {
     this.is_updating = false;
 
 
