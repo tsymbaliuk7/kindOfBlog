@@ -11,7 +11,10 @@ export class LoginComponent implements OnInit {
   public input: any;
   title = ''
 
+  public errors: any;
+
   constructor(public userService: UserService) {
+
   }
 
   ngOnInit() {
@@ -20,15 +23,31 @@ export class LoginComponent implements OnInit {
       email: '',
       password: '',
     }
+    this.errors = {
+      email: [],
+      password: [],
+      username: [],
+    }
+
   }
 
   toRegister(){
     this.userService.registerUser(this.input).subscribe(
         response => {
           alert('User' + this.input.username + 'has been registered')
+          this.errors = {
+            email: [],
+            password: [],
+            username: [],
+          }
         },
-        error =>
-          console.log('error', error)
+        error => {
+          this.errors = {
+            email: error.error.email ? error.error.email : [],
+            password: error.error.password ? error.error.password : [],
+            username: error.error.username ? error.error.username : [],
+          }
+        }
     );
   }
 
