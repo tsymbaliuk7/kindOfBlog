@@ -49,6 +49,7 @@ export class UserService {
       data => {
         // @ts-ignore
           this.updateData(data['token']);
+          
       },
       err => {
         this.errors = err['error'];

@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostsComponent } from './posts/posts.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { PostsComponent } from './posts/posts.component';
     HeaderComponent,
     FooterComponent,
     PostsComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

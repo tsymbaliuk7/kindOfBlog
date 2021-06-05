@@ -1,0 +1,46 @@
+.registration {
+  margin: 40px 100px;
+  border-radius: 15px;
+  background-color: #343A40;
+  padding: 100px 200px;
+}
+.registration .register-errors {
+  padding: 5px;
+  background-color: #E71D36;
+  border-radius: 10px;
+}
+.registration div {
+  margin-bottom: 20px;
+}
+.registration input, .registration textarea {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  outline: none;
+  padding: 10px;
+  width: 100%;
+  background-color: #161B22;
+  border: none;
+  border-radius: 10px;
+  color: #fffffa;
+  margin-bottom: 10px;
+}
+.registration input:focus, .registration input textarea, .registration textarea:focus, .registration textarea textarea {
+  box-shadow: 0 0 5px #51cbee;
+  padding: 12px;
+  margin-bottom: 11px;
+  border: 1px solid #51cbee;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+.center-button {
+  text-align: center;
+}
+.center-button button {
+  width: 45%;
+}
+
+/*# sourceMappingURL=register.component.css.map */

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "./user.service";
+import {UserService} from "../login/login/user.service";
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
-  public input: any;
+   public input: any;
 
   public errors: any;
 
@@ -35,12 +35,12 @@ export class LoginComponent implements OnInit {
   toRegister(){
     this.userService.registerUser(this.input).subscribe(
         response => {
-          alert('User' + this.input.username + 'has been registered')
           this.errors = {
             email: [],
             password: [],
             username: [],
           }
+          console.log(response)
         },
         error => {
           this.errors = {
@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
           }
         }
     );
-    this.router.navigate(['']);
   }
 
   refreshToken() {
