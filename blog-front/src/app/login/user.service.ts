@@ -30,6 +30,10 @@ export class UserService {
 
   }
 
+  public getUserList(): Observable<any>{
+    return this.http.get('http://127.0.0.1:8000/accounts/users', this.httpOptions)
+  }
+
   public getUser(){
 
     // @ts-ignore

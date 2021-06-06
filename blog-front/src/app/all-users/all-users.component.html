@@ -1,0 +1,12 @@
+<div class="custom-container all-users">
+    <h1>All users:</h1>
+    <div class="white_line"></div>
+    <div *ngFor="let user of allUsers">
+        <div class="all-users-item">
+            <div class="d-flex align-items-center">
+                <h2>{{user.username}}</h2>
+                <span>{{user.email}}</span>
+            </div>
+        </div>
+    </div>
+</div>

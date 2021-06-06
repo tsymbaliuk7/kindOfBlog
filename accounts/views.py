@@ -2,15 +2,17 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 
-from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer
+from .models import User
+from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, ListUserSerializer
 from .renderers import UserJSONRenderer
 
 
 class RegistrationAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
-    renderer_classes = (UserJSONRenderer, )
+    renderer_classes = (UserJSONRenderer,)
 
     def post(self, request):
         user = request.data
@@ -52,3 +54,6 @@ class UserAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ListUsersAPIView(ListAPIView):
+    queryset = User.objects.order_by('created_at')
+    serializer_class = ListUserSerializer

@@ -4,11 +4,13 @@ import {LoginComponent} from "./login/login.component";
 import {AppComponent} from "./app.component";
 import {PostsComponent} from "./posts/posts.component";
 import {RegisterComponent} from "./register/register.component";
+import {AllUsersComponent} from "./all-users/all-users.component";
 
 const routes: Routes = [
     {path: '', component: PostsComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'login', component: LoginComponent}
+    {path: 'login', component: LoginComponent},
+    {path: 'all-users', component: AllUsersComponent}
 ];
 
 @NgModule({

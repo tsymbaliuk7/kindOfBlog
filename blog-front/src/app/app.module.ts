@@ -13,6 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PostsComponent } from './posts/posts.component';
 import { RegisterComponent } from './register/register.component';
+import { AllUsersComponent } from './all-users/all-users.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { RegisterComponent } from './register/register.component';
     FooterComponent,
     PostsComponent,
     RegisterComponent,
+    AllUsersComponent,
   ],
   imports: [
     BrowserModule,
