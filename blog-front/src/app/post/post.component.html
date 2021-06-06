@@ -14,7 +14,7 @@
             </p>
             <a href="">by @tsymbaliuk </a>
             <span>{{post.updated_at | date: 'short'}} </span>
-            <div class="d-flex">
+            <div *ngIf="userService.isLogIn()" class="d-flex">
                 <div (click)="changeToUpdating()"><img class="post-img"  src="assets/refresh.svg" alt="update"></div>
                 <div (click)="deleteConfirmation()"><img class="post-img"  src="assets/delete.svg" alt="delete"></div>
             </div>
@@ -27,7 +27,7 @@
             <p class="post-text" style="white-space: pre">{{post.text}}</p>
         </div>
     </div>
-    <div [hidden]="!is_updating">
+    <div *ngIf="userService.isLogIn()" [hidden]="!is_updating">
             <input type="text" [(ngModel)]="post_updated.title">
             <textarea type="text" [(ngModel)]="post_updated.text"></textarea>
         <div class="btn-toolbar">

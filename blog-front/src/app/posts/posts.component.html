@@ -6,34 +6,31 @@
           <div class="img-holder">
             <img [src]="avatar" alt="Avatar" class="avatar">
           </div>
-          <h3>{{user.getUser().username}}</h3>
+          <h3 *ngIf="user.isLogIn()">{{user.getUser().username}}</h3>
           <div class="white_line"></div>
           <ul>
             <li><a href="">My posts</a></li>
             <li><a href="">Popular posts</a></li>
             <li><a href="">Settings</a></li>
-            <li><span (click)="user.logout()">Logout</span></li>
+            <li *ngIf="user.isLogIn()"><a style="cursor: pointer" routerLinkActive="active" (click)="user.logout()">Logout</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="col-md-9" style="padding: 0;">
       <div class="posts-list">
-        <h3>My Posts</h3>
+        <h3>Posts</h3>
         <div class="white_line"></div>
-        <label for="create_title"></label>
-        <input id="create_title" placeholder="Title" type="text" [(ngModel)]="singlePost.title">
-        <br>
-        <label for="create_text"></label>
-<!--        <div *ngIf="create_error.error.text">-->
-<!--          <div class="alert alert-danger" role="alert">-->
-<!--            {{create_error.error.text}}-->
-<!--          </div>-->
-<!--        </div>-->
-        <textarea style="resize: none;" placeholder="Type in text" id="create_text"  name="text" [(ngModel)]="singlePost.text"></textarea>
-        <br>
-        <div>
-          <input class="btn btn-outline-success" type="submit" (click)="createPost()" value="Create Post">
+        <div *ngIf="user.isLogIn()">
+          <label for="create_title"></label>
+          <input id="create_title" placeholder="Title" type="text" [(ngModel)]="singlePost.title">
+          <br>
+          <label for="create_text"></label>
+          <textarea style="resize: none;" placeholder="Type in text" id="create_text"  name="text" [(ngModel)]="singlePost.text"></textarea>
+          <br>
+          <div>
+            <input class="btn btn-outline-success" type="submit" (click)="createPost()" value="Create Post">
+          </div>
         </div>
 
         <div style="margin-top: 50px">

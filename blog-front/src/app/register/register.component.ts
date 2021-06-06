@@ -42,6 +42,9 @@ export class RegisterComponent implements OnInit {
             username: [],
             error: []
           }
+          this.userService.updateData(response.user.token)
+          localStorage.setItem('auth_token', JSON.stringify(response.user))
+          this.router.navigate(['']);
         },
         error => {
          this.errors = {

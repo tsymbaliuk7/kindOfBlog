@@ -12,11 +12,14 @@ export class PostsService {
 
   constructor(private http: HttpClient, private userService: UserService) {
     // @ts-ignore
-    const userdata = JSON.parse(localStorage.getItem('auth_token')).token
+    let userdata = JSON.parse(localStorage.getItem('auth_token'))
+    if (!userdata){
+      userdata = {user: '', token: '', email: ''}
+    }
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'JWT ' + userdata
+        'Authorization': 'JWT ' + userdata.token
       })
     };
   }

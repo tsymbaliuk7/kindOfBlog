@@ -18,7 +18,7 @@ export class UserService {
 
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
@@ -31,8 +31,13 @@ export class UserService {
   }
 
   public getUser(){
+
     // @ts-ignore
-    return JSON.parse(localStorage.getItem('auth_token'))
+    let user = JSON.parse(localStorage.getItem('auth_token'))
+    if (!user){
+      user = {user: '', token: '', email: ''}
+    }
+    return user
   }
 
   public login(user: any): Observable<any> {
@@ -43,6 +48,7 @@ export class UserService {
 
   logout() {
     localStorage.removeItem('auth_token');
+    this.router.navigate([''])
   }
 
   public isLogIn(){

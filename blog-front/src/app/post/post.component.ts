@@ -2,6 +2,7 @@ import { Component, OnInit , Input} from '@angular/core';
 import {PostsService} from "../posts.service";
 import {AppComponent} from "../app.component";
 import {PostsComponent} from "../posts/posts.component";
+import {UserService} from "../login/user.service";
 
 @Component({
   selector: 'app-post',
@@ -18,7 +19,7 @@ export class PostComponent implements OnInit {
   updating_errors: any;
   is_updating;
 
-  constructor(public postService: PostsService, public app: PostsComponent) {
+  constructor(public postService: PostsService, public app: PostsComponent, public userService: UserService) {
     this.is_updating = false;
 
 
