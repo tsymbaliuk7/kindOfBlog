@@ -141,11 +141,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'kindOfBlog.exceptions.core_exception_handler',
+    'NON_FIELD_ERRORS_KEY': 'error',
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'apps.authentication.backends.JWTAuthentication',
+        'accounts.backends.JWTAuthentication',
     ),
 
 }

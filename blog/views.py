@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
@@ -13,7 +13,7 @@ from .serializers import CommentsSerializer, PostSerializer
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.order_by('-created_at')
     serializer_class = PostSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     # def list(self, request):
     #     posts = Post.objects.all()

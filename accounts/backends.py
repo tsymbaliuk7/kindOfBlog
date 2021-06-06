@@ -8,11 +8,10 @@ from .models import User
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
-    authentication_header_prefix = 'Token'
+    authentication_header_prefix = 'JWT'
 
     def authenticate(self, request):
         request.user = None
-
         auth_header = authentication.get_authorization_header(request).split()
         auth_header_prefix = self.authentication_header_prefix.lower()
 
@@ -30,16 +29,19 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
         if prefix.lower() != auth_header_prefix:
             return None
-
         return self._authenticate_credentials(request, token)
 
-    def _authenticate_credentials(self, request, token):
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
-        except Exception:
-            msg = 'Ошибка аутентификации. Невозможно декодировать токеню'
-            raise exceptions.AuthenticationFailed(msg)
+    @staticmethod
+    def _authenticate_credentials(request, token):
+        # try:
+        #     payload = jwt.decode(token, key=settings.SECRET_KEY, algorithm='HS256')
+        #     print('111111', payload)
+        # except Exception:
+        #     msg = 'Ошибка аутентификации. Невозможно декодировать токен'
+        #     print(2222222)
+        #     raise exceptions.AuthenticationFailed(msg)
 
+        payload = jwt.decode(token, key=settings.SECRET_KEY, algorithm='HS256')
         try:
             user = User.objects.get(pk=payload['id'])
         except User.DoesNotExist:

@@ -6,13 +6,13 @@
           <div class="img-holder">
             <img [src]="avatar" alt="Avatar" class="avatar">
           </div>
-          <h3>@tsymbaliuk</h3>
+          <h3>{{user.getUser().username}}</h3>
           <div class="white_line"></div>
           <ul>
             <li><a href="">My posts</a></li>
             <li><a href="">Popular posts</a></li>
             <li><a href="">Settings</a></li>
-            <li><a href="">Logout</a></li>
+            <li><span (click)="user.logout()">Logout</span></li>
           </ul>
         </div>
       </div>

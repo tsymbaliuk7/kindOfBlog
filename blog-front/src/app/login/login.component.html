@@ -1,17 +1,8 @@
 <div class="custom-container">
 
   <div class="registration" *ngIf="!userService.token">
-    <h2>Registration</h2>
+    <h2>Log in</h2>
     <div class="white_line"></div>
-    <div class="">
-      <input autocomplete="off" type="text" name="login-username" placeholder="Username" [(ngModel)]="input.username">
-      <div *ngIf="errors.username.length !== 0">
-          <div class="register-errors">
-            <div *ngFor="let err of errors.username">
-              {{err}}
-            </div>
-          </div>
-      </div>
     <div class="">
       <input autocomplete="off" type="email" name="login-email" placeholder="Email" [(ngModel)]="input.email">
       <div *ngIf="errors.email.length !== 0">
@@ -39,10 +30,9 @@
           </div>
       </div>
     <div class="center-button">
-      <button (click)="toRegister()" class="btn btn-primary">Register</button>
-      <div class="login-register"><span>or </span><a routerLink="/login" routerLinkActive="active">Log in</a></div>
+      <button (click)="toLogIn()" class="btn btn-primary">Log in</button>
+        <div class="login-register"><span>or </span><a routerLink="/register" routerLinkActive="active">Register</a></div>
     </div>
   </div>
-    </div>
   </div>
 </div>

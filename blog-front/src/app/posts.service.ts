@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {UserService} from "./login/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,19 @@ export class PostsService {
 
   private httpOptions: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
+    // @ts-ignore
+    const userdata = JSON.parse(localStorage.getItem('auth_token')).token
     this.httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT ' + userdata
+      })
     };
   }
 
   public postsList(): Observable<any>{
+    console.log(localStorage.getItem('auth_token'))
     return this.http.get('http://127.0.0.1:8000/posts/', this.httpOptions)
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {PostsService} from "../posts.service";
+import {UserService} from "../login/user.service";
 
 @Component({
   selector: 'app-posts',
@@ -14,7 +15,7 @@ export class PostsComponent implements OnInit {
   public create_error: any;
   public avatar = 'https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-avatar-icon-image_1130894.jpg';
 
-  public constructor(private title: Title, public postService: PostsService) {
+  public constructor(private title: Title, public postService: PostsService, public user: UserService) {
     this.singlePost = {
       'title': '',
       'text': '',
@@ -32,7 +33,6 @@ export class PostsComponent implements OnInit {
           this.getPosts();
         },
         error => {
-          console.log(error)
           this.create_error = error;
         }
     )
@@ -44,7 +44,6 @@ export class PostsComponent implements OnInit {
           this.posts = data
         },
         error => {
-          console.log(error)
         }
     )
   }

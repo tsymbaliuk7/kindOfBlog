@@ -20,45 +20,39 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.input = {
-      username: '',
       email: '',
       password: '',
     }
     this.errors = {
       email: [],
       password: [],
-      username: [],
+      error: []
     }
 
   }
 
-  toRegister(){
-    this.userService.registerUser(this.input).subscribe(
-        response => {
-          alert('User' + this.input.username + 'has been registered')
-          this.errors = {
+  toLogIn(){
+     this.userService.login(this.input).subscribe(
+      data => {
+        this.errors = {
             email: [],
             password: [],
-            username: [],
+            error: []
           }
-        },
-        error => {
-          this.errors = {
-            email: error.error.email ? error.error.email : [],
-            password: error.error.password ? error.error.password : [],
-            username: error.error.username ? error.error.username : [],
+          console.log(data.user)
+          this.userService.updateData(data.user.token)
+          localStorage.setItem('auth_token', JSON.stringify(data.user))
+          this.router.navigate(['']);
+      },
+      error => {
+         this.errors = {
+            email: error.error.user.email ? error.error.user.email : [],
+            password: error.error.user.password ? error.error.user.password : [],
+            error: error.error.user.error ? error.error.user.error : [],
           }
-        }
+      }
     );
-    this.router.navigate(['']);
   }
 
-  refreshToken() {
-    this.userService.refreshToken();
-  }
-
-  toLogout() {
-    this.userService.logout();
-  }
 
 }

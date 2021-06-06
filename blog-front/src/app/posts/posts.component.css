@@ -23,7 +23,7 @@
   text-align: center;
 }
 .side-bar .menu {
-  position: fixed;
+  position: relative;
 }
 
 .posts-list {

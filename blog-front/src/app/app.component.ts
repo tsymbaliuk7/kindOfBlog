@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "./login/login/user.service";
+import {UserService} from "./login/user.service";
 import {Title} from "@angular/platform-browser";
 import {PostsService} from "./posts.service";
 import {AppRoutingModule} from "./app-routing.module";

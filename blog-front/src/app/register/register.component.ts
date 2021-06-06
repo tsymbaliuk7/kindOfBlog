@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../login/login/user.service";
+import {UserService} from "../login/user.service";
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   public errors: any;
 
   constructor(public userService: UserService, public title: Title, private router: Router) {
-    title.setTitle('Login')
+    title.setTitle('Register')
   }
 
   ngOnInit() {
@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
       email: [],
       password: [],
       username: [],
+      error: []
     }
 
   }
@@ -39,25 +40,20 @@ export class RegisterComponent implements OnInit {
             email: [],
             password: [],
             username: [],
+            error: []
           }
-          console.log(response)
         },
         error => {
-          this.errors = {
-            email: error.error.email ? error.error.email : [],
-            password: error.error.password ? error.error.password : [],
-            username: error.error.username ? error.error.username : [],
+         this.errors = {
+            email: error.error.user.email ? error.error.user.email : [],
+            password: error.error.user.password ? error.error.user.password : [],
+            username: error.error.user.username ? error.error.user.username : [],
+            error: error.error.user.error ? error.error.user.error : [],
           }
         }
     );
   }
 
-  refreshToken() {
-    this.userService.refreshToken();
-  }
 
-  toLogout() {
-    this.userService.logout();
-  }
 
 }
