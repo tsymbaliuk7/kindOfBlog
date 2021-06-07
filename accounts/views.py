@@ -1,11 +1,11 @@
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, get_object_or_404
 
 from .models import User
-from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, ListUserSerializer
+from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer
 from .renderers import UserJSONRenderer
 
 
@@ -54,6 +54,16 @@ class UserAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ListUsersAPIView(ListAPIView):
-    queryset = User.objects.order_by('created_at')
-    serializer_class = ListUserSerializer
+class UserViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = DifferentUsersSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response(None, status=status.HTTP_400_BAD_REQUEST)
+        serializer = DifferentUsersSerializer(user)
+        return Response(serializer.data)

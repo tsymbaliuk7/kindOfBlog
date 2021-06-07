@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PostsComponent } from './posts/posts.component';
 import { RegisterComponent } from './register/register.component';
 import { AllUsersComponent } from './all-users/all-users.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { AllUsersComponent } from './all-users/all-users.component';
     PostsComponent,
     RegisterComponent,
     AllUsersComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

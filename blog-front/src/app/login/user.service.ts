@@ -39,7 +39,7 @@ export class UserService {
     // @ts-ignore
     let user = JSON.parse(localStorage.getItem('auth_token'))
     if (!user){
-      user = {user: '', token: '', email: ''}
+      user = {username: '', token: '', email: ''}
     }
     return user
   }
@@ -65,6 +65,11 @@ export class UserService {
     const token_parts = this.token.split(/\./);
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
     this.token_expires = new Date(token_decoded.exp * 1000);
+  }
+
+
+  public getProfile(userId: any): Observable<any>{
+    return this.http.get('http://127.0.0.1:8000/accounts/users/' + userId + '/', this.httpOptions)
   }
 
 }

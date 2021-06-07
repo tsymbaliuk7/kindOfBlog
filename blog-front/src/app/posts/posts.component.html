@@ -6,7 +6,8 @@
           <div class="img-holder">
             <img [src]="avatar" alt="Avatar" class="avatar">
           </div>
-          <h3 *ngIf="user.isLogIn()">{{user.getUser().username}}</h3>
+          <h3>{{userProfile.username}}</h3>
+          <p style="text-align: center; color: lightslategrey">{{userProfile.email}}</p>
           <div class="white_line"></div>
           <ul>
             <li><a href="">My posts</a></li>
@@ -21,7 +22,7 @@
       <div class="posts-list">
         <h3>Posts</h3>
         <div class="white_line"></div>
-        <div *ngIf="user.isLogIn()">
+        <div *ngIf="user.isLogIn() && user.getUser().id == userProfile.id">
           <label for="create_title"></label>
           <input id="create_title" placeholder="Title" type="text" [(ngModel)]="singlePost.title">
           <br>
@@ -34,14 +35,14 @@
         </div>
 
         <div style="margin-top: 50px">
-          <div *ngIf="posts.keys.length === 0; else no_posts">
+          <div *ngIf="posts.length !== 0; else no_posts">
             <div *ngFor="let post of posts">
               <app-post [post]="post"></app-post>
               <hr>
             </div>
           </div>
           <ng-template #no_posts>
-            <p>You have no posts</p>
+            <p>{{userProfile.username}} have no posts</p>
           </ng-template>
         </div>
 

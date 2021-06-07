@@ -12,7 +12,7 @@
                 color: post.is_liked ? 'green': '#fffffa'
                 }" > + </span>
             </p>
-            <a href="">by @tsymbaliuk </a>
+            <a routerLinkActive="active" [routerLink]="['/profile', post.owner.id]">by @{{post.owner.username}} </a>
             <span>{{post.updated_at | date: 'short'}} </span>
             <div *ngIf="userService.isLogIn()" class="d-flex">
                 <div (click)="changeToUpdating()"><img class="post-img"  src="assets/refresh.svg" alt="update"></div>

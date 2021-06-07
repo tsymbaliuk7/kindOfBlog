@@ -110,7 +110,7 @@ export class PostComponent implements OnInit {
     if (confirm('Do you really want to delete \'' + this.post.title + '\'?')){
       this.postService.deletePost(this.post).subscribe(
           data => {
-            this.app.getPosts();
+            this.app.getPosts(this.post.owner.id);
           },
           error => {
 
@@ -120,11 +120,7 @@ export class PostComponent implements OnInit {
   }
 
   declineUpdating(){
-    console.log(this.post)
-    console.log(this.post_updated)
     this.post_updated = Object.assign({}, this.post)
-    console.log(this.post)
-    console.log(this.post_updated)
     this.is_updating = false;
 
   }

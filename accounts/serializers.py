@@ -14,7 +14,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
+        fields = ['id', 'email', 'username', 'password', 'token']
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -53,6 +53,7 @@ class LoginSerializer(serializers.Serializer):
             )
 
         return {
+            'id': user.id,
             'email': user.email,
             'username': user.username,
             'token': user.token
@@ -85,8 +86,7 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-class ListUserSerializer(serializers.ModelSerializer):
-
+class DifferentUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'username')
