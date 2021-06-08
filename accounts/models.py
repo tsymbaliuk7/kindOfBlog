@@ -42,11 +42,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         return '{}, email: {}'.format(self.username, self.email)
 
     def _generate_jwt_token(self):
-        dt = datetime.now() + timedelta(days=1)
+        dt = datetime.now() + timedelta(hours=5)
         token = jwt.encode({
             'id': self.pk,
             'username': self.username,
             'email': self.email,
+            'exp': int(dt.timestamp()),
+        }, key=settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
+
+    def generate_refresh_token(self):
+        dt = datetime.now() + timedelta(days=30)
+        token = jwt.encode({
+            'id': self.pk,
             'exp': int(dt.timestamp()),
         }, key=settings.SECRET_KEY, algorithm='HS256')
 
@@ -60,3 +69,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.username
+
+
+class UserRefreshToken(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=True)
+    refresh_token = models.CharField(default='', max_length=400)

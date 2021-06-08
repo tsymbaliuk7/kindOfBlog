@@ -1,10 +1,12 @@
+import json
+
 from rest_framework import status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
 
-from .models import User
+from .models import User, UserRefreshToken
 from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer
 from .renderers import UserJSONRenderer
 
@@ -18,7 +20,10 @@ class RegistrationAPIView(APIView):
         user = request.data
         serializer = self.serializer_class(data=user)
         if serializer.is_valid():
-            serializer.save()
+            new_user = serializer.save()
+            new_token = new_user.generate_refresh_token()
+            UserRefreshToken(user=new_user, refresh_token=new_token).save()
+            serializer.validated_data['refresh_token'] = new_token
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -32,7 +37,14 @@ class LoginAPIView(APIView):
         user = request.data
         serializer = self.serializer_class(data=user)
         if serializer.is_valid():
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            new_user = User.objects.get(email=serializer.data['email'])
+            new_token = new_user.generate_refresh_token()
+            ur = get_object_or_404(UserRefreshToken, user=new_user)
+            ur.refresh_token = new_token
+            ur.save()
+            data = {'refresh_token': new_token}
+            data.update(serializer.data)
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

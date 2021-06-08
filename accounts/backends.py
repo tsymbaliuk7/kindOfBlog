@@ -33,15 +33,11 @@ class JWTAuthentication(authentication.BaseAuthentication):
 
     @staticmethod
     def _authenticate_credentials(request, token):
-        # try:
-        #     payload = jwt.decode(token, key=settings.SECRET_KEY, algorithm='HS256')
-        #     print('111111', payload)
-        # except Exception:
-        #     msg = 'Ошибка аутентификации. Невозможно декодировать токен'
-        #     print(2222222)
-        #     raise exceptions.AuthenticationFailed(msg)
-
-        payload = jwt.decode(token, key=settings.SECRET_KEY, algorithm='HS256')
+        try:
+            payload = jwt.decode(token, key=settings.SECRET_KEY, algorithm='HS256')
+        except Exception:
+            msg = 'Ошибка аутентификации. Невозможно декодировать токен'
+            raise exceptions.AuthenticationFailed(msg)
         try:
             user = User.objects.get(pk=payload['id'])
         except User.DoesNotExist:
