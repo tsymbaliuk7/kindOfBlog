@@ -20,6 +20,7 @@ export class PostsComponent implements OnInit {
                      private router: ActivatedRoute, private navigationRoute: Router) {
 
     this.userProfile = {}
+
     this.posts = []
       this.singlePost = {
         'title': '',
@@ -30,6 +31,7 @@ export class PostsComponent implements OnInit {
 
   }
 
+
   public createPost(){
     this.postService.postsCreate(this.singlePost).subscribe(
         data => {
@@ -38,7 +40,6 @@ export class PostsComponent implements OnInit {
           this.getPosts(this.userProfile.id);
         },
         error => {
-            console.log(this.singlePost)
           this.create_error = error;
         }
     )
@@ -49,7 +50,6 @@ export class PostsComponent implements OnInit {
     this.postService.postsList(userId).subscribe(
         data => {
           this.posts = data
-            console.log(this.posts)
         },
         error => {
 

@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
             password: [],
             error: []
           }
-          this.userService.updateData(data.user.token)
           delete data.user.password
+          console.log(data)
           localStorage.setItem('auth_token', JSON.stringify(data.user))
           this.router.navigate(['']);
       },

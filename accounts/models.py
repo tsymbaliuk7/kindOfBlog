@@ -72,5 +72,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserRefreshToken(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, unique=True)
     refresh_token = models.CharField(default='', max_length=400)

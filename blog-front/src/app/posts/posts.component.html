@@ -9,12 +9,6 @@
           <h3>{{userProfile.username}}</h3>
           <p style="text-align: center; color: lightslategrey">{{userProfile.email}}</p>
           <div class="white_line"></div>
-          <ul>
-            <li><a href="">My posts</a></li>
-            <li><a href="">Popular posts</a></li>
-            <li><a href="">Settings</a></li>
-            <li *ngIf="user.isLogIn()"><a style="cursor: pointer" routerLinkActive="active" (click)="user.logout()">Logout</a></li>
-          </ul>
         </div>
       </div>
     </div>
@@ -22,7 +16,7 @@
       <div class="posts-list">
         <h3>Posts</h3>
         <div class="white_line"></div>
-        <div *ngIf="user.isLogIn() && user.getUser().id == userProfile.id">
+        <div *ngIf="user.isLogIn() && user.getUser().username === userProfile.username">
           <label for="create_title"></label>
           <input id="create_title" placeholder="Title" type="text" [(ngModel)]="singlePost.title">
           <br>

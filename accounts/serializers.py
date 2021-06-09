@@ -1,7 +1,10 @@
-from .models import User
+import jwt
+
+from .models import User, UserRefreshToken
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-
+from django.conf import settings
+import datetime
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
@@ -58,6 +61,63 @@ class LoginSerializer(serializers.Serializer):
             'email': user.email,
             'username': user.username,
             'token': user.token,
+        }
+
+
+class RefreshSerializer(serializers.Serializer):
+
+    refresh_token = serializers.CharField(max_length=400)
+
+    def validate(self, data):
+
+        refresh_token = data.get('refresh_token', None)
+
+        if refresh_token is None:
+            raise serializers.ValidationError(
+                'An refresh_token is None.'
+            )
+
+        payload = jwt.decode(refresh_token, key=settings.SECRET_KEY, algorithm='HS256')
+        user = User.objects.get(pk=payload['id'])
+        exp = payload['exp']
+
+        if exp < int(datetime.datetime.now().timestamp()):
+            raise serializers.ValidationError(
+                'token expired.'
+            )
+
+        if user is None:
+            raise serializers.ValidationError(
+                'A user with this id was not found.'
+            )
+
+        if not user.is_active:
+            raise serializers.ValidationError(
+                'This user has been deactivated.'
+            )
+
+        user_refresh = UserRefreshToken.objects.get(user=user)
+
+        if user_refresh is None:
+            raise serializers.ValidationError(
+                'Such user have no refresh token'
+
+            )
+
+        if user_refresh.refresh_token != refresh_token:
+            raise serializers.ValidationError(
+                'refresh_token is wrong!'
+            )
+
+        user_refresh.refresh_token = user.generate_refresh_token()
+        user_refresh.save()
+
+        return {
+            'id': user.id,
+            'email': user.email,
+            'username': user.username,
+            'token': user.token(),
+            'refresh_token': user_refresh.refresh_token,
         }
 
 

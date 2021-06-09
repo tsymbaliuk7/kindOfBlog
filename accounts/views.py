@@ -1,13 +1,13 @@
 import json
 
 from rest_framework import status, viewsets
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
 
 from .models import User, UserRefreshToken
-from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer
+from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer, RefreshSerializer
 from .renderers import UserJSONRenderer
 
 
@@ -23,8 +23,9 @@ class RegistrationAPIView(APIView):
             new_user = serializer.save()
             new_token = new_user.generate_refresh_token()
             UserRefreshToken(user=new_user, refresh_token=new_token).save()
-            serializer.validated_data['refresh_token'] = new_token
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            data = {'refresh_token': new_token}
+            data.update(serializer.data)
+            return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -46,6 +47,21 @@ class LoginAPIView(APIView):
             data.update(serializer.data)
             return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RefreshTokenAPIView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = RefreshSerializer
+
+    def post(self, request):
+        token = request.data
+        serializer = self.serializer_class(data=token)
+        print(token)
+        if serializer.is_valid():
+            print(serializer.validated_data)
+            return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+        return Response(None, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UserAPIView(APIView):

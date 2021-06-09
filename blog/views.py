@@ -51,7 +51,7 @@ class PostViewSet(ModelViewSet):
     def destroy(self, request, pk=None, **kwargs):
         post = get_object_or_404(Post, pk=pk)
         if not post.owner.id == request.user.id:
-            Response(status=HTTP_404_NOT_FOUND)
+            return Response(status=HTTP_404_NOT_FOUND)
         post.delete()
         return Response(status=HTTP_204_NO_CONTENT)
 

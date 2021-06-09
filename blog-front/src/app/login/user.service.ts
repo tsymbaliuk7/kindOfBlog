@@ -60,11 +60,10 @@ export class UserService {
   }
 
 
-  public updateData(token:string) {
-    this.token = token;
-    const token_parts = this.token.split(/\./);
+  public decodeToken(token:string) {
+    const token_parts = token.split(/\./);
     const token_decoded = JSON.parse(window.atob(token_parts[1]));
-    this.token_expires = new Date(token_decoded.exp * 1000);
+    return token_decoded.exp
   }
 
 
@@ -72,4 +71,8 @@ export class UserService {
     return this.http.get('http://127.0.0.1:8000/accounts/users/' + userId + '/', this.httpOptions)
   }
 
+  public refreshToken(refresh_token: string): Observable<any>{
+    let old_token = JSON.stringify({refresh_token: refresh_token})
+    return this.http.post('http://127.0.0.1:8000/accounts/refresh', old_token, this.httpOptions)
+  }
 }

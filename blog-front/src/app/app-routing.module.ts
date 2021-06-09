@@ -9,6 +9,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 
 const routes: Routes = [
     {path: 'profile/:userId', component: PostsComponent},
+    {path: '', component: AllUsersComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {path: 'all-users', component: AllUsersComponent},

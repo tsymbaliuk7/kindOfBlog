@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import LoginAPIView, RegistrationAPIView, UserViewSet
+from .views import LoginAPIView, RegistrationAPIView, UserViewSet, RefreshTokenAPIView
 from rest_framework.routers import DefaultRouter
 
 
@@ -25,5 +25,6 @@ router.register(r'users', UserViewSet, basename='user')
 urlpatterns = [
     path('register', RegistrationAPIView.as_view()),
     path('login', LoginAPIView.as_view()),
+    path('refresh', RefreshTokenAPIView.as_view()),
     path('', include(router.urls))
 ]

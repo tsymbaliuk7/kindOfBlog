@@ -11,17 +11,30 @@ export class PostsService {
   private httpOptions: any;
 
   constructor(private http: HttpClient, private userService: UserService) {
-    // @ts-ignore
-    let userdata = JSON.parse(localStorage.getItem('auth_token'))
-    if (!userdata){
-      userdata = {user: '', token: '', email: ''}
-    }
-    this.httpOptions = {
+
+    if (userService.isLogIn()) {
+      // @ts-ignore
+      let userdata = JSON.parse(localStorage.getItem('auth_token'))
+      if (userService.decodeToken(userdata.token) * 1000 < Date.now()){
+        userService.refreshToken(userdata.refresh_token).subscribe(request => {
+          localStorage.setItem('auth_token', JSON.stringify(request))
+      })
+      }
+      this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'JWT ' + userdata.token
       })
     };
+    }
+    else {
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        })
+      }
+    }
+
   }
 
   public postsList(ownerId: any): Observable<any>{
@@ -40,10 +53,5 @@ export class PostsService {
     return this.http.delete('http://127.0.0.1:8000/posts/' + post.id + '/', this.httpOptions)
   }
 
-
-
-   // public postsDetail(post_id: any): Observable<any>{
-   //   return this.http.get('http://127.0.0.1:8000/posts/' + post_id + '/', this.httpOptions)
-   // }
 
 }
