@@ -16,8 +16,11 @@ export class PostsService {
       // @ts-ignore
       let userdata = JSON.parse(localStorage.getItem('auth_token'))
       if (userService.decodeToken(userdata.token) * 1000 < Date.now()){
+        console.log('here')
         userService.refreshToken(userdata.refresh_token).subscribe(request => {
           localStorage.setItem('auth_token', JSON.stringify(request))
+          // @ts-ignore
+          userdata = JSON.parse(localStorage.getItem('auth_token'))
       })
       }
       this.httpOptions = {

@@ -44,7 +44,7 @@ class LoginAPIView(APIView):
             ur.refresh_token = new_token
             ur.save()
             data = {'refresh_token': new_token}
-            data.update(serializer.data)
+            data.update(serializer.validated_data)
             return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

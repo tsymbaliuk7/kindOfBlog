@@ -73,7 +73,7 @@ export class PostsComponent implements OnInit {
       const userId = Number(routerParam.get('userId'));
       this.getUserProfileData(userId);
       this.getPosts(userId)
-
+      console.log(this.user.getUser())
   }
 
 }
