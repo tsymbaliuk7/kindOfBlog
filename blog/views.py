@@ -25,9 +25,10 @@ class PostViewSet(ModelViewSet):
     #     serializer = PostSerializer(posts, many=True)
     #     return Response(serializer.data)
     #
+
     def retrieve(self, request, pk=None, **kwargs):
         owner = get_object_or_404(User, pk=pk)
-        posts = Post.objects.filter(owner=owner).order_by('-created_at')
+        posts = Post.objects.filter(owner__id=owner.id).order_by('-created_at')
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 

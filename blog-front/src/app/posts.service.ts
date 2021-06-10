@@ -11,13 +11,17 @@ export class PostsService {
   private httpOptions: any;
 
   constructor(private http: HttpClient, private userService: UserService) {
+      this.checkToken()
 
-    if (userService.isLogIn()) {
+
+  }
+
+  private checkToken(){
+    if (this.userService.isLogIn()) {
       // @ts-ignore
       let userdata = JSON.parse(localStorage.getItem('auth_token'))
-      if (userService.decodeToken(userdata.token) * 1000 < Date.now()){
-        console.log('here')
-        userService.refreshToken(userdata.refresh_token).subscribe(request => {
+      if (this.userService.decodeToken(userdata.token) * 1000 < Date.now()){
+        this.userService.refreshToken(userdata.refresh_token).subscribe(request => {
           localStorage.setItem('auth_token', JSON.stringify(request))
           // @ts-ignore
           userdata = JSON.parse(localStorage.getItem('auth_token'))
@@ -37,7 +41,6 @@ export class PostsService {
         })
       }
     }
-
   }
 
   public postsList(ownerId: any): Observable<any>{
@@ -45,24 +48,29 @@ export class PostsService {
   }
 
   public postsCreate(post: any): Observable<any>{
+    this.checkToken()
     return this.http.post('http://127.0.0.1:8000/posts/', post, this.httpOptions)
   }
 
   public postsUpdate(post: any): Observable<any>{
+    this.checkToken()
     return this.http.put('http://127.0.0.1:8000/posts/' + post.id + '/', post, this.httpOptions)
   }
 
   public deletePost(post: any): Observable<any>{
+    this.checkToken()
     return this.http.delete('http://127.0.0.1:8000/posts/' + post.id + '/', this.httpOptions)
   }
 
 
   public likePost(post: any): Observable<any>{
+    this.checkToken()
     return this.http.put('http://127.0.0.1:8000/posts/like/' + post.id + '/', post, this.httpOptions)
   }
 
 
   public dislikePost(post: any): Observable<any>{
+    this.checkToken()
     return this.http.put('http://127.0.0.1:8000/posts/dislike/' + post.id + '/', post, this.httpOptions)
   }
 

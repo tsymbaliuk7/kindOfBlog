@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer, Serializer, PrimaryKeyRe
 from accounts.serializers import DifferentUsersSerializer
 from accounts.models import User
 
+
 class CommentsSerializer(ModelSerializer):
     class Meta:
         model = Comment
@@ -10,7 +11,6 @@ class CommentsSerializer(ModelSerializer):
 
 
 class PostSerializer(ModelSerializer):
-
     comments = CommentsSerializer(many=True)
     owner = DifferentUsersSerializer(many=False)
 
@@ -32,4 +32,3 @@ class PostSerializer(ModelSerializer):
         model = Post
         fields = '__all__'
         read_only_fields = ['owner', ]
-
