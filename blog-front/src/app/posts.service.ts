@@ -57,4 +57,14 @@ export class PostsService {
   }
 
 
+  public likePost(post: any): Observable<any>{
+    return this.http.put('http://127.0.0.1:8000/posts/like/' + post.id + '/', post, this.httpOptions)
+  }
+
+
+  public dislikePost(post: any): Observable<any>{
+    return this.http.put('http://127.0.0.1:8000/posts/dislike/' + post.id + '/', post, this.httpOptions)
+  }
+
+
 }

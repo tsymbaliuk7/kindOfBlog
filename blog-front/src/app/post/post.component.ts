@@ -25,6 +25,15 @@ export class PostComponent implements OnInit {
 
   }
 
+
+  public isLikedPost(){
+    return this.post.likes.indexOf(this.userService.getUser().id) !== -1
+  }
+
+  public isDislikedPost(){
+    return this.post.dislikes.indexOf(this.userService.getUser().id) !== -1
+  }
+
   ngOnInit(): void {
     this.post_updated = Object.assign({}, this.post)
 
@@ -49,56 +58,20 @@ export class PostComponent implements OnInit {
   }
 
   dislikeClicked(){
-    if (this.post.is_liked){
-      this.post.balance -= 2
+    if (this.userService.isLogIn()){
+      this.postService.dislikePost(this.post).subscribe(response => {
+        this.post = response
+      })
     }
-    else {
-      if (this.post.is_disliked){
-        this.post.balance += 1
-      }
-      else {
-        this.post.balance -= 1
-      }
-    }
-    this.post.is_disliked = !this.post.is_disliked;
-    this.post.is_liked = false;
-    this.postService.postsUpdate(this.post).subscribe(
-          data => {
-            this.post.title = data.title
-            this.post.text = data.text
-          },
-          error => {
-            console.log(error)
-            this.updating_errors = error
-          }
-      );
 
   }
 
   likeClicked(){
-    if (this.post.is_disliked){
-      this.post.balance += 2
+    if (this.userService.isLogIn()){
+       this.postService.likePost(this.post).subscribe(response => {
+        this.post = response
+      })
     }
-    else {
-      if (this.post.is_liked){
-        this.post.balance -= 1
-      }
-      else {
-        this.post.balance += 1
-      }
-    }
-    this.post.is_disliked = false;
-    this.post.is_liked = !this.post.is_liked;
-    this.postService.postsUpdate(this.post).subscribe(
-          data => {
-            this.post.title = data.title
-            this.post.text = data.text
-          },
-          error => {
-            console.log(error)
-            this.updating_errors = error
-          }
-      );
   }
 
   getColor(){

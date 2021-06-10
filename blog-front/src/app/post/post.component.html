@@ -3,13 +3,13 @@
         <div class="d-flex justify-content-between align-items-center">
             <p class="likes-class">
                 <span style="cursor: pointer" [ngStyle]="{
-                color: post.is_disliked ? 'red': '#fffffa'
+                color: isDislikedPost() ? 'red': '#fffffa'
                 }" (click)="dislikeClicked()"> - </span>
                 <span [ngStyle]="{
                 color: getColor()
                 }" >{{post.balance}} </span>
                 <span style="cursor: pointer" (click)="likeClicked()" [ngStyle]="{
-                color: post.is_liked ? 'green': '#fffffa'
+                color: isLikedPost() ? 'green': '#fffffa'
                 }" > + </span>
             </p>
             <a routerLinkActive="active" [routerLink]="['/profile', post.owner.id]">by @{{post.owner.username}} </a>

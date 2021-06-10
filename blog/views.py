@@ -2,12 +2,13 @@ import json
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet, ModelViewSet
-from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK, HTTP_201_CREATED, HTTP_301_MOVED_PERMANENTLY, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK, HTTP_201_CREATED, HTTP_301_MOVED_PERMANENTLY, \
+    HTTP_204_NO_CONTENT
 from .models import Post, Comment
 from .serializers import CommentsSerializer, PostSerializer
 from accounts.serializers import DifferentUsersSerializer
@@ -17,7 +18,7 @@ from accounts.models import User
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.order_by('-created_at')
     serializer_class = PostSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
     # def list(self, request):
     #     posts = Post.objects.all()
@@ -54,4 +55,31 @@ class PostViewSet(ModelViewSet):
             return Response(status=HTTP_404_NOT_FOUND)
         post.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class LikePostView(APIView):
+    permission_classes = (AllowAny,)
+    serializer_class = PostSerializer
+
+    def put(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        user = get_object_or_404(User, pk=request.user.id)
+        post.like(user)
+        post = get_object_or_404(Post, pk=pk)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)
+
+
+class DislikePostView(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PostSerializer
+
+    def put(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        user = get_object_or_404(User, pk=request.user.id)
+        post.dislike(user)
+        post = get_object_or_404(Post, pk=pk)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)
+
 

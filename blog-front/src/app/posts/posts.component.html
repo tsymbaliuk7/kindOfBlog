@@ -16,7 +16,7 @@
       <div class="posts-list">
         <h3>Posts</h3>
         <div class="white_line"></div>
-        <div *ngIf="user.isLogIn() && user.getUser().username === userProfile.username">
+        <div *ngIf="user.isLogIn() && user.getUser().id === userProfile.id">
           <label for="create_title"></label>
           <input id="create_title" placeholder="Title" type="text" [(ngModel)]="singlePost.title">
           <br>

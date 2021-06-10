@@ -7,7 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, get_object_or_404
 
 from .models import User, UserRefreshToken
-from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer, RefreshSerializer
+from .serializers import LoginSerializer, RegistrationSerializer, UserSerializer, DifferentUsersSerializer, \
+    RefreshSerializer
 from .renderers import UserJSONRenderer
 
 
@@ -61,7 +62,6 @@ class RefreshTokenAPIView(APIView):
             print(serializer.validated_data)
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
         return Response(None, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class UserAPIView(APIView):
